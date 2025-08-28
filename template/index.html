@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Power4</title>
+    <style>
+        table { border-collapse: collapse; }
+        td {
+            width: 50px; height: 50px;
+            border: 1px solid black;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .p1 { background: rgb(136, 15, 108); border-radius: 60%; }
+        .p2 { background: rgb(27, 119, 133); border-radius: 60%; }
+    </style>
+</head>
+<body>
+    <h1>Game Power4</h1>
+    <p>
+        {{if eq .Winner 0}}Tour du joueur {{.Turn}}
+        {{else if eq .Winner -1}}Match nul !
+        {{else}}Le joueur {{.Winner}} a gagné !
+        {{end}}
+    </p>
+
+    <table>
+        {{range $i, $row := .Board}}
+        <tr>
+            {{range $j, $cell := $row}}
+            <td>
+                {{if eq $cell 1}}<div class="p1"></div>{{end}}
+                {{if eq $cell 2}}<div class="p2"></div>{{end}}
+            </td>
+            {{end}}
+        </tr>
+        {{end}}
+    </table>
+
+    {{if eq .Winner 0}}
+    <form method="post" action="/play">
+        <label for="col">Choisir une colonne (0-6):</label>
+        <input type="number" name="column" min="0" max="6" required>
+        <button type="submit">Jouer</button>
+    </form>
+    {{end}}
+</body>
+</html>
